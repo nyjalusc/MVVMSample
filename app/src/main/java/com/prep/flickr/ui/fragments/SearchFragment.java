@@ -1,6 +1,7 @@
 package com.prep.flickr.ui.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +15,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.prep.flickr.R;
+import com.prep.flickr.adapters.PhotoListener;
+import com.prep.flickr.adapters.PhotoRecyclerAdapter;
 import com.prep.flickr.api.responses.FlickrPhotosResponse;
+import com.prep.flickr.models.FlickrPhoto;
 import com.prep.flickr.ui.viewmodels.SearchViewModel;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements PhotoListener {
 
     private SearchViewModel mViewModel;
-    private Toolbar mToolbar;
     private SearchView mSearchView;
     private ProgressBar mProgressBar;
+    private RecyclerView mRecyclerView;
+    private PhotoRecyclerAdapter mAdapter;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -40,11 +47,19 @@ public class SearchFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         mSearchView = view.findViewById(R.id.search_view);
-        mToolbar = view.findViewById(R.id.toolbar);
+        Toolbar mToolbar = view.findViewById(R.id.toolbar);
         mProgressBar = view.findViewById(R.id.progress_loading);
+        mRecyclerView = view.findViewById(R.id.list_photos);
         ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
         initSearchView();
+        initRecyclerView();
         return view;
+    }
+
+    private void initRecyclerView() {
+        mAdapter = new PhotoRecyclerAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     private void initSearchView() {
@@ -80,6 +95,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onChanged(FlickrPhotosResponse flickrPhotosResponse) {
                 setProgressBarVisibility(false);
+                mAdapter.setPhotos(flickrPhotosResponse.getPhotos());
             }
         });
 
@@ -94,5 +110,16 @@ public class SearchFragment extends Fragment {
     private void setProgressBarVisibility(boolean show) {
         int visibility = (show ? View.VISIBLE : View.GONE);
         mProgressBar.setVisibility(visibility);
+    }
+
+    @Override
+    public void onPhotoClicked(int position) {
+        // Launch fullscreen activity
+        FlickrPhoto clickedPhoto = mAdapter.getSelectedItem(position);
+        if (clickedPhoto != null) {
+            Log.d("XXX", "onPhotoClicked: " + clickedPhoto.getId() + " URL: " + clickedPhoto.getUrl());
+        } else {
+            Log.d("XXX", "onPhotoClicked: Couldn't find the item");
+        }
     }
 }

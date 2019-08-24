@@ -15,7 +15,7 @@ public interface SearchRequest {
             @Query("api_key") String apiKey,
             @Query("text") String text,
             @Query("page") String pageNumber,
-            @Query("url_s") String extras,
+            @Query("extras") String extras,
             @Query("format") String format,
             @Query("nojsoncallback") String nojsoncallback
     );

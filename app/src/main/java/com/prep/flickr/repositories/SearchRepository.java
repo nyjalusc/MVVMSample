@@ -33,4 +33,8 @@ public class SearchRepository {
     public void searchPhotos(String query, int pageNumber) {
         mSearchRemoteDataSource.searchPhotos(query, pageNumber);
     }
+
+    public void cancelRequest() {
+        mSearchRemoteDataSource.cancelRequest();
+    }
 }

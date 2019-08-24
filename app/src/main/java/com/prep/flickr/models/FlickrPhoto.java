@@ -8,13 +8,21 @@ import com.google.gson.annotations.SerializedName;
 public class FlickrPhoto implements Parcelable {
     /**
      *  Sample Model:
-     *  {
-     *      "id": "48609964126", "owner": "36812749@N00", "secret": "0fdf86aef9",
-     *      "server": "65535", "farm": 66, "title": "An afternoon nap", "ispublic": 1,
-     *      "isfriend": 0, "isfamily": 0,
-     *      "url_s": "https:\/\/live.staticflickr.com\/65535\/48609964126_0fdf86aef9_m.jpg",
-     *      "height_s": "160", "width_s": "240"
-     *  }
+     *
+     *              {
+     *                 "id": "48612886021",
+     *                 "owner": "51203833@N05",
+     *                 "secret": "1ddf2b8549",
+     *                 "server": "65535",
+     *                 "farm": 66,
+     *                 "title": "Tyson waiting to play football!",
+     *                 "ispublic": 1,
+     *                 "isfriend": 0,
+     *                 "isfamily": 0,
+     *                 "url_s": "https://live.staticflickr.com/65535/48612886021_1ddf2b8549_m.jpg",
+     *                 "height_s": "240",
+     *                 "width_s": "160"
+     *             }
      */
 
     private String id;

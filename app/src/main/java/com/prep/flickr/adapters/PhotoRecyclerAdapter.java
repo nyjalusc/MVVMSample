@@ -39,8 +39,6 @@ public class PhotoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             RequestOptions requestOptions = new RequestOptions()
                     .placeholder(R.drawable.ic_launcher_background);
 
-            Log.d("XXX", "onBindViewHolder: displaying: " + item.getUrl());
-
             Glide.with(holder.itemView.getContext())
                     .setDefaultRequestOptions(requestOptions)
                     .load(item.getUrl())

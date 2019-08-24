@@ -60,6 +60,17 @@ public class SearchFragment extends Fragment implements PhotoListener {
         mAdapter = new PhotoRecyclerAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                // Check if we cannot scroll vertically any further
+                if (!mRecyclerView.canScrollVertically(RecyclerView.VERTICAL)) {
+                    // Call the api to fetch next page
+                    mViewModel.searchNextPage();
+                    Log.d("XXX", "onScrollStateChanged: Searching next page");
+                }
+            }
+        });
     }
 
     private void initSearchView() {
@@ -96,6 +107,7 @@ public class SearchFragment extends Fragment implements PhotoListener {
             public void onChanged(FlickrPhotosResponse flickrPhotosResponse) {
                 setProgressBarVisibility(false);
                 mAdapter.setPhotos(flickrPhotosResponse.getPhotos());
+                mViewModel.setIsPerformingQuery(false);
             }
         });
 

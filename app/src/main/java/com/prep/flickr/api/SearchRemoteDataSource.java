@@ -76,6 +76,10 @@ public class SearchRemoteDataSource {
         return mIsQueryExhausted;
     }
 
+    public void cancelRequest() {
+        mSearchPhotosRunnable.cancelRequest();
+    }
+
     private class SearchPhotosRunnable implements Runnable {
         private String query;
         private String pageNumber;
@@ -99,7 +103,6 @@ public class SearchRemoteDataSource {
 
                 if (searchResponseResponse.code() == 200) { // Success
                     if (searchResponseResponse.body() != null) {
-                        Log.d("XXX", "run: " + searchResponseResponse.body().getPhotosResponse());
                         if (pageNumber.equals("1")) {
                             // First response should directly update the LiveData
                             mPhotosResponse.postValue(searchResponseResponse.body().getPhotosResponse());
@@ -149,6 +152,7 @@ public class SearchRemoteDataSource {
                     );
         }
 
+        // TODO: Refactor to fetch old pages from network as well, otherwise the list of photos in memory will keep bloating
         private FlickrPhotosResponse combine(FlickrPhotosResponse original, FlickrPhotosResponse newlyFetched) {
             if (original == null) {
                 return newlyFetched;

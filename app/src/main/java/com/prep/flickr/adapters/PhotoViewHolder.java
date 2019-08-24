@@ -10,7 +10,7 @@ import com.prep.flickr.R;
 
 public class PhotoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     ImageView image;
-    PhotoListener photoListener;
+    private PhotoListener photoListener;
 
     public PhotoViewHolder(@NonNull View itemView, PhotoListener photoListener) {
         super(itemView);

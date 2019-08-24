@@ -12,4 +12,25 @@ public class FlickrSearchResponse {
     FlickrPhotosResponse photosResponse;
 
     String stat;
+
+    public FlickrSearchResponse(FlickrPhotosResponse photosResponse, String stat) {
+        this.photosResponse = photosResponse;
+        this.stat = stat;
+    }
+
+    public FlickrPhotosResponse getPhotosResponse() {
+        return photosResponse;
+    }
+
+    public String getStat() {
+        return stat;
+    }
+
+    @Override
+    public String toString() {
+        return "FlickrSearchResponse{" +
+                "photosResponse=" + photosResponse +
+                ", stat='" + stat + '\'' +
+                '}';
+    }
 }

@@ -10,6 +10,7 @@ public class FlickrPhotosResponse {
      * Sample Response:
      * { "page": 1, "pages": "3527", "perpage": 100, "total": "352674", "photo": [..]}
      */
+
     int page;
 
     String pages;
@@ -19,6 +20,7 @@ public class FlickrPhotosResponse {
 
     String total;
 
+    @SerializedName("photo")
     List<FlickrPhoto> photos;
 
     public FlickrPhotosResponse(int page, String pages, int perpage, String total, List<FlickrPhoto> photos) {

@@ -69,7 +69,6 @@ public class SearchFragment extends Fragment implements PhotoListener {
                 if (!mRecyclerView.canScrollVertically(RecyclerView.VERTICAL)) {
                     // Call the api to fetch next page
                     mViewModel.searchNextPage();
-                    Log.d("XXX", "onScrollStateChanged: Searching next page");
                 }
             }
         });
@@ -131,12 +130,9 @@ public class SearchFragment extends Fragment implements PhotoListener {
         // Launch fullscreen activity
         FlickrPhoto clickedPhoto = mAdapter.getSelectedItem(position);
         if (clickedPhoto != null) {
-            Log.d("XXX", "onPhotoClicked: " + clickedPhoto.getId() + " URL: " + clickedPhoto.getUrl());
             Intent intent = new Intent(getActivity(), FullscreenActivity.class);
             intent.putExtra(FullscreenActivity.EXTRA_FLICKR_PHOTO, clickedPhoto);
             startActivity(intent);
-        } else {
-            Log.d("XXX", "onPhotoClicked: Couldn't find the item");
         }
     }
 }

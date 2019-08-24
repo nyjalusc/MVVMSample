@@ -32,8 +32,11 @@ public class SearchRemoteDataSource {
 
     private static SearchRemoteDataSource instance;
 
+    private MutableLiveData<Boolean> mIsQueryExhausted;
+
     private SearchRemoteDataSource() {
         mPhotosResponse = new MutableLiveData<>();
+        mIsQueryExhausted = new MutableLiveData<>();
     }
 
     public static SearchRemoteDataSource getInstance() {
@@ -68,6 +71,10 @@ public class SearchRemoteDataSource {
         }, Constants.NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
     }
 
+    public LiveData<Boolean> isQueryExhausted() {
+        return mIsQueryExhausted;
+    }
+
     private class SearchPhotosRunnable implements Runnable {
         private String query;
         private String pageNumber;
@@ -91,6 +98,7 @@ public class SearchRemoteDataSource {
 
                 if (searchResponseResponse.code() == 200) { // Success
                     if (searchResponseResponse.body() != null) {
+                        Log.d("XXX", "run: " + searchResponseResponse.body().getPhotosResponse());
                         if (pageNumber.equals("1")) {
                             // First response should directly update the LiveData
                             mPhotosResponse.postValue(searchResponseResponse.body().getPhotosResponse());
@@ -98,9 +106,15 @@ public class SearchRemoteDataSource {
                             // Compose the result and update the liveData otherwise we will lose old data
                             mPhotosResponse.postValue(combine(mPhotosResponse.getValue(), searchResponseResponse.body().getPhotosResponse()));
                         }
+
+                        // Check if we have reached the last page
+                        if (pageNumber.equals(searchResponseResponse.body().getPhotosResponse().getPages())) {
+                            mIsQueryExhausted.postValue(true);
+                        }
                     } else {
                         // Response with no data
                         mPhotosResponse.postValue(null);
+                        mIsQueryExhausted.postValue(true);
                     }
                 } else { // Failure
                     String error = searchResponseResponse.errorBody().string();
@@ -108,6 +122,7 @@ public class SearchRemoteDataSource {
                     // TODO: Create a wrapper dataholder for the UI. Posting null is not a good pattern
                     // We post null for errors
                     mPhotosResponse.postValue(null);
+                    mIsQueryExhausted.postValue(true);
                 }
 
             } catch (IOException e) {
@@ -115,6 +130,7 @@ public class SearchRemoteDataSource {
                 // TODO: Create a wrapper dataholder for the UI. Posting null is not a good pattern
                 // We post null for errors
                 mPhotosResponse.postValue(null);
+                mIsQueryExhausted.postValue(true);
             }
         }
 

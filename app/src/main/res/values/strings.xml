@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Flickr</string>
     <string name="flickr_photo_desc">Flickr Photo</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="back_to_search_button">Back to Search</string>
 </resources>

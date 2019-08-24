@@ -46,8 +46,4 @@ public class SearchViewModel extends ViewModel {
     public void setIsPerformingQuery(boolean isPerformingQuery) {
         mIsPerformingQuery = isPerformingQuery;
     }
-
-    public void cancelRequest() {
-        searchRepository.cancelRequest();
-    }
 }

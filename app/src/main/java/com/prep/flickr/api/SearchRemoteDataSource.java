@@ -56,6 +56,7 @@ public class SearchRemoteDataSource {
     public void searchPhotos(String query, int pageNumber) {
         // Use a new Runnable every time to execute a request
         if (mSearchPhotosRunnable != null) {
+            cancelRequest();
             mSearchPhotosRunnable = null;
         }
 

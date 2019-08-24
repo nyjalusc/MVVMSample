@@ -1,5 +1,6 @@
 package com.prep.flickr.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.prep.flickr.adapters.PhotoListener;
 import com.prep.flickr.adapters.PhotoRecyclerAdapter;
 import com.prep.flickr.api.responses.FlickrPhotosResponse;
 import com.prep.flickr.models.FlickrPhoto;
+import com.prep.flickr.ui.activities.FullscreenActivity;
 import com.prep.flickr.ui.viewmodels.SearchViewModel;
 
 public class SearchFragment extends Fragment implements PhotoListener {
@@ -130,6 +132,9 @@ public class SearchFragment extends Fragment implements PhotoListener {
         FlickrPhoto clickedPhoto = mAdapter.getSelectedItem(position);
         if (clickedPhoto != null) {
             Log.d("XXX", "onPhotoClicked: " + clickedPhoto.getId() + " URL: " + clickedPhoto.getUrl());
+            Intent intent = new Intent(getActivity(), FullscreenActivity.class);
+            intent.putExtra(FullscreenActivity.EXTRA_FLICKR_PHOTO, clickedPhoto);
+            startActivity(intent);
         } else {
             Log.d("XXX", "onPhotoClicked: Couldn't find the item");
         }

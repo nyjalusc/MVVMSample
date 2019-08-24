@@ -37,6 +37,7 @@ public class SearchRemoteDataSource {
     private SearchRemoteDataSource() {
         mPhotosResponse = new MutableLiveData<>();
         mIsQueryExhausted = new MutableLiveData<>();
+        mIsQueryExhausted.setValue(false);
     }
 
     public static SearchRemoteDataSource getInstance() {
@@ -108,7 +109,9 @@ public class SearchRemoteDataSource {
                         }
 
                         // Check if we have reached the last page
-                        if (pageNumber.equals(searchResponseResponse.body().getPhotosResponse().getPages())) {
+                        int requestedPage = Integer.parseInt(pageNumber);
+                        int totalPages = Integer.parseInt(searchResponseResponse.body().getPhotosResponse().getPages());
+                        if (requestedPage >= totalPages) {
                             mIsQueryExhausted.postValue(true);
                         }
                     } else {
@@ -147,6 +150,12 @@ public class SearchRemoteDataSource {
         }
 
         private FlickrPhotosResponse combine(FlickrPhotosResponse original, FlickrPhotosResponse newlyFetched) {
+            if (original == null) {
+                return newlyFetched;
+            } else if (newlyFetched == null) {
+                return original;
+            }
+
             List<FlickrPhoto> combinedPhotos = new ArrayList<>(original.getPhotos());
             combinedPhotos.addAll(newlyFetched.getPhotos());
             return new FlickrPhotosResponse(newlyFetched.getPage(), newlyFetched.getPages(), newlyFetched.getPageSize(), newlyFetched.getTotal(), combinedPhotos);

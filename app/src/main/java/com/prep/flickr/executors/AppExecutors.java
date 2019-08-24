@@ -9,6 +9,7 @@ public class AppExecutors {
 
     // ScheduledExecutorService allows execution of a Runnable after a specified amount of delay
     private final ScheduledExecutorService mNetworkIO = Executors.newScheduledThreadPool(3);
+
     private AppExecutors() {
 
     }

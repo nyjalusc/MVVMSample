@@ -20,6 +20,10 @@ import java.util.concurrent.TimeUnit;
 import retrofit2.Call;
 import retrofit2.Response;
 
+/**
+ * Fetches the search response from network. Designed to execute only one request at a time.
+ * If a new request is made the only request will get cancelled.
+ */
 public class SearchRemoteDataSource {
     private static final String REST_API_METHOD = "flickr.photos.search";
     private static final String REST_API_RESPONSE_FORMAT = "json";

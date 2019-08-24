@@ -1,6 +1,5 @@
 package com.prep.flickr.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import com.prep.flickr.models.FlickrPhoto;
 
 import java.util.List;
 
+// TODO: Use the new RecylerView.ListAdapter for better performance. DiffUtil implementation becomes very easy.
 public class PhotoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<FlickrPhoto> mPhotos;
     private PhotoListener mPhotoListener;
@@ -48,7 +48,6 @@ public class PhotoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public void setPhotos(List<FlickrPhoto> photos) {
         mPhotos = photos;
-        Log.d("XXX", "setPhotos: Size: " + mPhotos.size());
         notifyDataSetChanged();
     }
 

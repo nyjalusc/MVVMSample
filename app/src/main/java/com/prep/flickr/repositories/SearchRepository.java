@@ -5,6 +5,11 @@ import androidx.lifecycle.LiveData;
 import com.prep.flickr.api.SearchRemoteDataSource;
 import com.prep.flickr.api.responses.FlickrPhotosResponse;
 
+/**
+ * Singleton Repo to fetch photos.
+ * TODO: Add a local database.
+ * TODO: Resolution of where to fetch the data from local vs remote datasource will be handled by this class.
+ */
 public class SearchRepository {
     private static SearchRepository instance;
     private SearchRemoteDataSource mSearchRemoteDataSource;

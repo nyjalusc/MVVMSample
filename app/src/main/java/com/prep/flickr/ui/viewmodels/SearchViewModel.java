@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel;
 import com.prep.flickr.api.responses.FlickrPhotosResponse;
 import com.prep.flickr.repositories.SearchRepository;
 
+/**
+ * Holds on to UI state. Keeps track of the query and page number.
+ */
 public class SearchViewModel extends ViewModel {
     private SearchRepository searchRepository;
     private boolean mIsPerformingQuery;
